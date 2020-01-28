@@ -15,6 +15,10 @@
         "ecmaVersion": 2018
     },
     "rules": {
-        "no-console":"off"
+        "no-console":"off",
+        "arrow-parens":"off",
+        "strict":"off",
+        "arrow-body-style": "off",
+        "object-curly-newline": "off"
     }
 }
