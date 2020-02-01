@@ -19,6 +19,7 @@
         "arrow-parens":"off",
         "strict":"off",
         "arrow-body-style": "off",
-        "object-curly-newline": "off"
+        "object-curly-newline": "off",
+        "camelcase":"off"
     }
 }
