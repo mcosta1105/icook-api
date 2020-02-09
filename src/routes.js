@@ -3,6 +3,7 @@ const express = require('express');
 const UserController = require('./controllers/UserController');
 const DietController = require('./controllers/DietController');
 const CuisineController = require('./controllers/CuisineController');
+const CategoryController = require('./controllers/CategoryController');
 
 const routes = express.Router();
 
@@ -22,5 +23,11 @@ routes.get('/diets/:id', DietController.getDiet);
 routes.post('/cuisines', CuisineController.createCuisine);
 routes.get('/cuisines', CuisineController.getCuisines);
 routes.get('/cuisines/:id', CuisineController.getCuisine);
+
+// Category router
+routes.post('/categories', CategoryController.createCategory);
+routes.get('/categories', CategoryController.getCategories);
+routes.get('/categories/:id', CategoryController.getCategory);
+
 
 module.exports = routes;
