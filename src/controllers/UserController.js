@@ -37,8 +37,8 @@ const getUser = async (req, res) => {
 
 // Update User
 const uptadeUser = async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
     const user = await User.findByPk(id);
     if (user) {
       const [numberOfAffectedRows, affectedRows] = await User.update({ ...req.body }, {
