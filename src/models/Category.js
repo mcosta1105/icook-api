@@ -8,8 +8,17 @@ class Category extends Model {
       },
       {
         sequelize,
+        tableName: 'categories',
       },
     );
+  }
+
+  static associate(models) {
+    this.belongsToMany(models.Recipe, {
+      foreignKey: 'category_id',
+      through: 'recipe_cuisines',
+      as: 'recipes',
+    });
   }
 }
 

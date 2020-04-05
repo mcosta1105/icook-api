@@ -8,18 +8,18 @@ class Diet extends Model {
       },
       {
         sequelize,
+        tableName: 'diets',
       },
     );
+  }
+
+  static associations(models) {
+    this.belongsToMany(models.Recipe, {
+      foreignKey: 'diet_id',
+      through: 'recipe_diets',
+      as: 'recipes',
+    });
   }
 }
 
 module.exports = Diet;
-
-
-// const Diet = db.define('diet', {
-//   diet_type: {
-//     type: Sequelize.STRING,
-//   },
-// });
-
-// module.exports = Diet;

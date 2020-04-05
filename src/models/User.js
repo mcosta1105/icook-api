@@ -13,6 +13,7 @@ class User extends Model {
       },
       {
         sequelize,
+        tableName: 'users',
       },
     );
   }
@@ -26,34 +27,3 @@ class User extends Model {
 }
 
 module.exports = User;
-
-// const User = db.define('user', {
-//   first_name: {
-//     type: Sequelize.STRING,
-//   },
-//   last_name: {
-//     type: Sequelize.STRING,
-//   },
-//   username: {
-//     type: Sequelize.STRING,
-//   },
-//   email: {
-//     type: Sequelize.STRING,
-//   },
-//   password: {
-//     type: Sequelize.STRING,
-//   },
-//   profile_image: {
-//     type: Sequelize.STRING,
-//   },
-// });
-
-// User.associate = models => {
-//   User.hasMany(models.Recipe, {
-//     foreignKey: 'user_id',
-//     as: 'recipes',
-//   });
-// };
-
-
-// module.exports = User;

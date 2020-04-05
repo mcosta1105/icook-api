@@ -1,20 +1,44 @@
-const Recipe = require('../models/Recipe');
 const User = require('../models/User');
+const Recipe = require('../models/Recipe');
+const Cuisine = require('../models/Cuisine');
+const Category = require('../models/Category');
+const Diet = require('../models/Diet');
 
 const createRecipe = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findByPk(id);
+    const { title, cuisineId, categoryId, dietId } = req.body;
 
+    const user = await User.findByPk(id);
     if (!user) {
       return res.status(400).json({ error: 'User not found' });
     }
 
+    const cuisine = await Cuisine.findByPk(cuisineId);
+    if (!cuisine) {
+      return res.status(400).json({ error: 'Cuisine not found' });
+    }
+
+    const category = await Category.findByPk(categoryId);
+    if (!category) {
+      return res.status(400).json({ error: 'Category not found' });
+    }
+
+    const diet = await Diet.findByPk(dietId);
+    if (!diet) {
+      return res.status(400).json({ error: 'Diet not found' });
+    }
+
     const recipe = await Recipe.create({
       user_id: id,
-      ...req.body,
+      title,
     });
+
+
+    await recipe.addCuisine(cuisine);
+    await recipe.addCategory(category);
+    await recipe.addDiet(diet);
 
     return res.json(recipe);
   } catch (e) {
@@ -27,7 +51,28 @@ const createRecipe = async (req, res) => {
 const getRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.findAll({
-      include: { association: 'user' },
+      include: [
+        {
+          association: 'user',
+          attributes: ['id', 'first_name', 'last_name'],
+        },
+        {
+          association: 'cuisines',
+          attributes: ['id', 'cuisine_name'],
+          through: { attributes: [] },
+        },
+        {
+          association: 'categories',
+          attributes: ['id', 'category_name'],
+          through: { attributes: [] },
+        },
+        {
+          association: 'diets',
+          attributes: ['id', 'diet_type'],
+          through: { attributes: [] },
+        },
+      ],
+      attributes: ['id', 'title'],
     });
     return res.json(recipes);
   } catch (e) {
@@ -40,7 +85,23 @@ const getRecipe = async (req, res) => {
   try {
     const { id } = req.params;
     const recipe = await Recipe.findByPk(id, {
-      include: { association: 'user' },
+      include: [
+        {
+          association: 'user',
+          attributes: ['id', 'first_name', 'last_name'],
+        },
+        {
+          association: 'cuisines',
+          attributes: ['id', 'cuisine_name'],
+          through: { attributes: [] },
+        },
+        {
+          association: 'categories',
+          attributes: ['id', 'category_name'],
+          through: { attributes: [] },
+        },
+      ],
+      attributes: ['id', 'title'],
     });
     if (!recipe) {
       return res.status(400).json({ error: 'Recipe not found' });

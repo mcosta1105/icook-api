@@ -8,6 +8,7 @@ class Recipe extends Model {
       },
       {
         sequelize,
+        tableName: 'recipes',
       },
     );
   }
@@ -17,22 +18,22 @@ class Recipe extends Model {
       foreignKey: 'user_id',
       as: 'user',
     });
+    this.belongsToMany(models.Cuisine, {
+      foreignKey: 'recipe_id',
+      through: 'recipe_cuisines',
+      as: 'cuisines',
+    });
+    this.belongsToMany(models.Category, {
+      foreignKey: 'recipe_id',
+      through: 'recipe_categories',
+      as: 'categories',
+    });
+    this.belongsToMany(models.Diet, {
+      foreignKey: 'recipe_id',
+      through: 'recipe_diets',
+      as: 'diets',
+    });
   }
 }
 
 module.exports = Recipe;
-
-// const Recipe = db.define('recipe', {
-//   title: {
-//     type: DataTypes.STRING,
-//   },
-// });
-
-// Recipe.associate = models => {
-//   Recipe.belongsTo(models.User, {
-//     foreignKey: 'user_id',
-//     as: 'user',
-//   });
-// };
-
-// module.exports = Recipe;
