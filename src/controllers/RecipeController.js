@@ -57,6 +57,10 @@ const getRecipes = async (req, res) => {
           attributes: ['id', 'first_name', 'last_name'],
         },
         {
+          association: 'ingredients',
+          attributes: ['id', 'ingredient_name', 'quantity', 'unit'],
+        },
+        {
           association: 'cuisines',
           attributes: ['id', 'cuisine_name'],
           through: { attributes: [] },

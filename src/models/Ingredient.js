@@ -1,15 +1,27 @@
-// const Sequelize = require('sequelize');
-// const db = require('../database/index');
 
-// const Ingredient = db.define('Ingredient', {
-//   name: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-//   quantity: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-// });
+const { Model, DataTypes } = require('sequelize');
 
-// module.exports = Ingredient;
+class Ingredient extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        ingredient_name: DataTypes.STRING,
+        quantity: DataTypes.REAL,
+        unit: DataTypes.STRING,
+      },
+      {
+        sequelize,
+        tableName: 'ingredients',
+      },
+    );
+  }
+
+  static associate(models) {
+    this.belongsTo(models.Recipe, {
+      foreignKey: 'recipe_id',
+      as: 'recipe',
+    });
+  }
+}
+
+module.exports = Ingredient;

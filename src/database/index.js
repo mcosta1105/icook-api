@@ -8,12 +8,14 @@ const Cuisine = require('../models/Cuisine');
 const Diet = require('../models/Diet');
 const Recipe = require('../models/Recipe');
 const User = require('../models/User');
+const Ingredient = require('../models/Ingredient');
 
 Category.init(connection);
 Cuisine.init(connection);
 Diet.init(connection);
 Recipe.init(connection);
 User.init(connection);
+Ingredient.init(connection);
 
 
 Object.values(connection.models)

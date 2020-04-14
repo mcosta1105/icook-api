@@ -33,6 +33,10 @@ class Recipe extends Model {
       through: 'recipe_diets',
       as: 'diets',
     });
+    this.hasMany(models.Ingredient, {
+      foreignKey: 'recipe_id',
+      as: 'ingredients',
+    });
   }
 }
 
