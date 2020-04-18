@@ -61,6 +61,10 @@ const getRecipes = async (req, res) => {
           attributes: ['id', 'ingredient_name', 'quantity', 'unit'],
         },
         {
+          association: 'steps',
+          attributes: ['id', 'order', 'description'],
+        },
+        {
           association: 'cuisines',
           attributes: ['id', 'cuisine_name'],
           through: { attributes: [] },
@@ -95,6 +99,14 @@ const getRecipe = async (req, res) => {
           attributes: ['id', 'first_name', 'last_name'],
         },
         {
+          association: 'ingredients',
+          attributes: ['id', 'ingredient_name', 'quantity', 'unit'],
+        },
+        {
+          association: 'steps',
+          attributes: ['id', 'order', 'description'],
+        },
+        {
           association: 'cuisines',
           attributes: ['id', 'cuisine_name'],
           through: { attributes: [] },
@@ -102,6 +114,11 @@ const getRecipe = async (req, res) => {
         {
           association: 'categories',
           attributes: ['id', 'category_name'],
+          through: { attributes: [] },
+        },
+        {
+          association: 'diets',
+          attributes: ['id', 'diet_type'],
           through: { attributes: [] },
         },
       ],

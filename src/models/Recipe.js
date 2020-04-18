@@ -37,6 +37,10 @@ class Recipe extends Model {
       foreignKey: 'recipe_id',
       as: 'ingredients',
     });
+    this.hasMany(models.Step, {
+      foreignKey: 'recipe_id',
+      as: 'steps',
+    });
   }
 }
 

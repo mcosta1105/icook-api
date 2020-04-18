@@ -5,6 +5,7 @@ const CuisineController = require('./controllers/CuisineController');
 const CategoryController = require('./controllers/CategoryController');
 const RecipeController = require('./controllers/RecipeController');
 const IngredientController = require('./controllers/IngredientController');
+const Step = require('./controllers/StepController');
 
 const routes = express.Router();
 
@@ -27,6 +28,11 @@ routes.delete('/v1/users/:userId/recipes/:id', RecipeController.deleteRecipe);
 routes.post('/v1/ingredients', IngredientController.createIngredient);
 routes.put('/v1/ingredients/:id', IngredientController.updateIngredient);
 routes.delete('/v1/ingredients/:id', IngredientController.deleteIngredient);
+
+// Step routes
+routes.post('/v1/steps', Step.createStep);
+routes.put('/v1/steps/:id', Step.updateStep);
+routes.delete('/v1/steps/:id', Step.deleteStep);
 
 // Diet router
 routes.post('/v1/diets', DietController.createDiet);
