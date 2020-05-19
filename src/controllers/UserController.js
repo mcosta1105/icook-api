@@ -5,14 +5,14 @@ const createUser = async (req, res) => {
     const user = await User.create({ ...req.body });
     return res.json(user);
   } catch (e) {
-    return res.status(400).json({ error: e.errors[0].message });
+    return res.status(400).json({ error: e });
   }
 };
 
 // Get All Users
 const getUsers = async (req, res) => {
   try {
-    const users = await await User.findAll();
+    const users = await User.findAll();
     return res.json(users);
   } catch (e) {
     console.log(e);
@@ -23,8 +23,8 @@ const getUsers = async (req, res) => {
 // Get User
 const getUser = async (req, res) => {
   try {
-    const { user_id } = req.params;
-    const user = await User.findByPk(user_id);
+    const { id } = req.params;
+    const user = await User.findByPk(id);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -37,12 +37,12 @@ const getUser = async (req, res) => {
 
 // Update User
 const uptadeUser = async (req, res) => {
-  const { user_id } = req.params;
   try {
-    const user = await User.findByPk(user_id);
+    const { id } = req.params;
+    const user = await User.findByPk(id);
     if (user) {
       const [numberOfAffectedRows, affectedRows] = await User.update({ ...req.body }, {
-        where: { user_id },
+        where: { id },
         returning: true,
         plain: true,
       });
@@ -59,12 +59,12 @@ const uptadeUser = async (req, res) => {
 
 // Delete User
 const deleteUser = async (req, res) => {
-  const { user_id } = req.params;
+  const { id } = req.params;
   try {
-    const user = await User.findByPk(user_id);
+    const user = await User.findByPk(id);
     if (user) {
       await User.destroy({
-        where: { user_id },
+        where: { id },
       });
       return res.json({ message: `${user.username} successfully deleted.` });
     }

@@ -1,40 +1,35 @@
-/* eslint-disable no-unused-vars */
-
 'use strict';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('ingredients', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      first_name: {
+      ingredient_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      last_name: {
-        type: Sequelize.STRING,
+      quantity: {
+        type: Sequelize.REAL,
         allowNull: false,
       },
-      username: {
+      unit: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
+        allowNull: true,
       },
-      email: {
-        type: Sequelize.STRING,
+      recipe_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      profile_image: {
-        type: Sequelize.STRING,
+        references: {
+          model: 'recipes',
+          key: 'id',
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
       },
       created_at: {
         type: Sequelize.DATE,
@@ -46,7 +41,9 @@ module.exports = {
       },
     });
   },
+
+  // eslint-disable-next-line no-unused-vars
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('ingredients');
   },
 };
