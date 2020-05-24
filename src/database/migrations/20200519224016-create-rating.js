@@ -2,30 +2,32 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('ingredients', {
+    return queryInterface.createTable('ratings', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      ingredient_name: {
-        type: Sequelize.STRING,
+      stars: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      quantity: {
-        type: Sequelize.REAL,
-        allowNull: false,
-      },
-      unit: {
-        type: Sequelize.STRING,
-        allowNull: true,
       },
       recipe_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'recipes',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      user_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -44,6 +46,6 @@ module.exports = {
 
   // eslint-disable-next-line no-unused-vars
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('ingredients');
+    return queryInterface.dropTable('ratings');
   },
 };

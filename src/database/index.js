@@ -11,6 +11,7 @@ const Recipe = require('../models/Recipe');
 const User = require('../models/User');
 const Ingredient = require('../models/Ingredient');
 const Step = require('../models/Step');
+const Rating = require('../models/Rating');
 
 // Initiate Models
 Category.init(connection);
@@ -20,6 +21,7 @@ Recipe.init(connection);
 User.init(connection);
 Ingredient.init(connection);
 Step.init(connection);
+Rating.init(connection);
 
 // Associate Models
 Object.values(connection.models)

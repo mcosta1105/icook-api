@@ -9,7 +9,7 @@ class Diet extends Model {
       {
         sequelize,
         tableName: 'diets',
-      },
+      }
     );
   }
 
@@ -18,6 +18,8 @@ class Diet extends Model {
       foreignKey: 'diet_id',
       through: 'recipe_diets',
       as: 'recipes',
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
     });
   }
 }

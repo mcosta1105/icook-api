@@ -15,9 +15,9 @@ module.exports = {
         references: {
           model: 'recipes',
           key: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       cuisine_id: {
         type: Sequelize.INTEGER,
@@ -25,9 +25,9 @@ module.exports = {
         references: {
           model: 'cuisines',
           key: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       created_at: {
         type: Sequelize.DATE,

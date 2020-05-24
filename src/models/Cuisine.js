@@ -9,7 +9,7 @@ class Cuisine extends Model {
       {
         sequelize,
         tableName: 'cuisines',
-      },
+      }
     );
   }
 
@@ -18,6 +18,8 @@ class Cuisine extends Model {
       foreignKey: 'cuisine_id',
       through: 'recipe_cuisines',
       as: 'recipes',
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
     });
   }
 }

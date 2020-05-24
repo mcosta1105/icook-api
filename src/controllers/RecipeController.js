@@ -8,42 +8,46 @@ const createRecipe = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { title, cuisineId, categoryId, dietId } = req.body;
+    const { title, cuisines, categories, diets } = req.body;
 
     const user = await User.findByPk(id);
     if (!user) {
       return res.status(400).json({ error: 'User not found' });
     }
 
-    const cuisine = await Cuisine.findByPk(cuisineId);
-    if (!cuisine) {
-      return res.status(400).json({ error: 'Cuisine not found' });
-    }
+    const cuisineModels = [];
+    cuisines.map(async cuisineId => {
+      const cuisine = await Cuisine.findByPk(cuisineId);
+      if (cuisine) {
+        cuisineModels.push(cuisine);
+      }
+    });
 
-    const category = await Category.findByPk(categoryId);
-    if (!category) {
-      return res.status(400).json({ error: 'Category not found' });
-    }
+    const categoryModels = [];
+    categories.map(async categoryId => {
+      const category = await Category.findByPk(categoryId);
+      if (category) categoryModels.push(category);
+    });
 
-    const diet = await Diet.findByPk(dietId);
-    if (!diet) {
-      return res.status(400).json({ error: 'Diet not found' });
-    }
+    const dietModels = [];
+    diets.map(async dietId => {
+      const diet = await Diet.findByPk(dietId);
+      if (diet) dietModels.push(diet);
+    });
 
     const recipe = await Recipe.create({
       user_id: id,
       title,
     });
 
-
-    await recipe.addCuisine(cuisine);
-    await recipe.addCategory(category);
-    await recipe.addDiet(diet);
+    if (cuisineModels) await recipe.setCuisines([...cuisineModels]);
+    if (categoryModels) await recipe.setCategories([...categoryModels]);
+    if (dietModels) await recipe.setDiets([...dietModels]);
 
     return res.json(recipe);
   } catch (e) {
     // console.log(e);
-    return res.status(400).json({ error: e });
+    return res.status(500).json({ error: e });
   }
 };
 
@@ -160,11 +164,14 @@ const updateRecipe = async (req, res) => {
     }
     const recipe = await Recipe.findByPk(id);
     if (recipe) {
-      const [numberOfAffectedRows, affectedRows] = await Recipe.update({ ...req.body }, {
-        where: { id },
-        returning: true,
-        plain: true,
-      });
+      const [numberOfAffectedRows, affectedRows] = await Recipe.update(
+        { ...req.body },
+        {
+          where: { id },
+          returning: true,
+          plain: true,
+        }
+      );
       if (affectedRows) {
         return res.json({ numberOfAffectedRows, affectedRows });
       }
@@ -178,13 +185,7 @@ const updateRecipe = async (req, res) => {
 // Delete Recipe
 const deleteRecipe = async (req, res) => {
   try {
-    const { userId, id } = req.params;
-
-    const user = await User.findByPk(userId);
-
-    if (!user) {
-      return res.status(400).json({ error: 'User not found' });
-    }
+    const { id } = req.params;
 
     const recipe = await Recipe.findByPk(id);
 

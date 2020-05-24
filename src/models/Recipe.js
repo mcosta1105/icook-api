@@ -9,7 +9,7 @@ class Recipe extends Model {
       {
         sequelize,
         tableName: 'recipes',
-      },
+      }
     );
   }
 
@@ -40,6 +40,10 @@ class Recipe extends Model {
     this.hasMany(models.Step, {
       foreignKey: 'recipe_id',
       as: 'steps',
+    });
+    this.hasMany(models.Rating, {
+      foreignKey: 'recipe_id',
+      as: 'ratings',
     });
   }
 }

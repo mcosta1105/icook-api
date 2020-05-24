@@ -14,7 +14,7 @@ class User extends Model {
       {
         sequelize,
         tableName: 'users',
-      },
+      }
     );
   }
 
@@ -22,6 +22,10 @@ class User extends Model {
     this.hasMany(models.Recipe, {
       foreignKey: 'user_id',
       as: 'recipes',
+    });
+    this.hasMany(models.Rating, {
+      foreignKey: 'user_id',
+      as: 'ratings',
     });
   }
 }

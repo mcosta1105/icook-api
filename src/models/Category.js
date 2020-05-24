@@ -9,25 +9,21 @@ class Category extends Model {
       {
         sequelize,
         tableName: 'categories',
-      },
+      }
     );
   }
 
   static associate(models) {
     this.belongsToMany(models.Recipe, {
+      foreignKeyConstraint: true,
       foreignKey: 'category_id',
-      through: 'recipe_cuisines',
+      through: 'recipe_categories',
       as: 'recipes',
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+      hooks: true,
     });
   }
 }
 
 module.exports = Category;
-
-// const Category = db.define('category', {
-//   category_name: {
-//     type: Sequelize.STRING,
-//   },
-// });
-
-// module.exports = Category;
